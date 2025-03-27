@@ -1,38 +1,416 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* src/components/AnnotationTool.css */
+/* src/components/AnnotationTool.css */
+.annotation-tool {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f5f5f5;
+}
+
+.header-actions {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 16px;
+}
+
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: transparent;
+  border: none;
+  color: var(--primary-color);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.comment-sidebar{
+  padding: 20px;
+  text-align: left;
+}
+
+.sidebar-toggle:hover {
+  background-color: var(--primary-light);
+}
+
+.annotation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  background-color: white;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.annotation-header h1 {
+  margin: 0;
+  font-size: 1rem;
+  color: black;
+  font-weight:500;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sidebar-toggle {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  color: black;
+}
+
+.tool-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  width: 100%;
+  height: calc(100vh - 50px); /* Adjust based on your header height */
+}
+
+.annotation-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  width: 100%;
+  height: 100%;
+}
+
+.annotation-main.with-sidebar {
+  width: calc(100% - 300px);
+}
+
+.empty-state {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+  color: #666;
+  font-size: 1.2rem;
+}
+
+/* src/components/ImageUploader.css */
+.image-uploader {
+  padding: 0.75rem;
+  background-color: #eee;
+  border-bottom: 1px solid #ddd;
+}
+
+.file-input {
+  display: none;
+}
+
+.upload-button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.image-thumbnails {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.thumbnail {
+  position: relative;
+  width: 100px;
+  height: 75px;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.thumbnail.active {
+  border-color: #4a90e2;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* src/components/ImageCanvas.css */
+.image-canvas-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.image-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.annotation-image {
+  display: block;
+  max-width: 90%;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+/* src/components/CommentMarker.css */
+.comment-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  background-color: #4a90e2;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.comment-marker:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.comment-marker.active {
+  background-color: #2e6fc9;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.marker-badge {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* src/components/CommentPopup.css */
+.comment-popup {
+  z-index: 1000;
+  position: absolute;
+  transform: translate(-50%, -100%);
+  margin-top: -10px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  z-index: 20;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.comment-popup:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+}
+
+.comment-popup form {
+  padding: 0.5rem;
+}
+
+.comment-popup textarea {
+  width: 100%;
+  min-height: 60px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ddd;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 0.9rem;
+  border-radius: 4px;
+}
+
+.comment-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.comment-actions button {
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.comment-actions button[type='button'] {
+  background-color: transparent;
+  border: 1px solid #ddd;
+}
+
+.comment-actions button[type='submit'] {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.comment-controls,
+.reply-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-button,
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 2px 5px;
+  color: #666;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  text-decoration: underline;
+}
+
+.delete-button {
+  color: #e25c5c;
+}
+
+.comment-text {
+  padding: 0.75rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.replies-container {
+  border-top: 1px solid #eee;
+  margin-top: 0.5rem;
+}
+
+.reply {
+  padding: 0.5rem;
+  border-bottom: 1px solid #f5f5f5;
+  background-color: #f9f9f9;
+}
+
+.reply-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.reply-text {
+  font-size: 0.9rem;
+  padding: 0.25rem 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.reply-form {
+  padding: 0.5rem;
+  border-top: 1px solid #eee;
+}
+
+.reply-form textarea {
+  min-height: 40px;
+}
+
+.reply-form button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  float: right;
+  margin-top: 0.25rem;
+}
+
+.edit-container {
+  padding: 0.5rem;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.edit-actions button {
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.edit-actions button:first-child {
+  background-color: transparent;
+  border: 1px solid #ddd;
+}
+
+.edit-actions button:last-child {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
 }
