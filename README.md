@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+# Image Annotation Tool
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An interactive image annotation tool built with React.js that allows users to upload images, add comments at specific points, and maintain threaded discussions.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Image Upload & Display**: Upload multiple images and switch between them
+- **Click-to-Comment**: Click anywhere on an image to add comments
+- **Comment Threads & Replies**: Support for nested replies in comments
+- **Persistent Storage**: All comments and images are saved to localStorage
+- **Sidebar Navigation**: Easily browse and jump to comments
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React.js for UI components
+- Zustand for state management
+- React Router for navigation
+- LocalStorage for data persistence
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation and Setup
 
-### `npm test`
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/image-annotation-tool.git
+cd image-annotation-tool
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Install dependencies:
+```bash
+npm install
+```
 
-### `npm run build`
+3. Start the development server:
+```bash
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+src/
+├── components/         # React components
+│   ├── AnnotationTool.jsx    # Main application wrapper
+│   ├── CommentMarker.jsx     # Visual markers on the image
+│   ├── CommentPopup.jsx      # Comment and reply interface
+│   ├── CommentSidebar.jsx    # Sidebar listing all comments
+│   ├── ImageCanvas.jsx       # Image display with annotation capabilities
+│   └── ImageUploader.jsx     # Image upload interface
+├── store/              # State management
+│   └── store.js        # Zustand store configuration
+├── App.jsx             # Application root
+└── index.js            # Entry point
+```
 
-### `npm run eject`
+## Deployment
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Deploying to Netlify
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Create a production build:
+```bash
+npm run build
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Deploy to Netlify using the Netlify CLI:
+```bash
+npm install -g netlify-cli
+netlify deploy
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. Follow the prompts to deploy the `build` directory.
 
-## Learn More
+4. Once satisfied with the preview, deploy to production:
+```bash
+netlify deploy --prod
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Deploying to Vercel
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Install Vercel CLI:
+```bash
+npm install -g vercel
+```
 
-### Code Splitting
+2. Deploy to Vercel:
+```bash
+vercel
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3. Follow the prompts to complete the deployment.
 
-### Analyzing the Bundle Size
+## Future Enhancements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- User authentication
+- Cloud storage for images and comments
+- Rich text formatting in comments
+- Export annotations as CSV/JSON
+- Group collaboration features
 
-### Making a Progressive Web App
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+MIT
